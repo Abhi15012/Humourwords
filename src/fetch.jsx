@@ -6,8 +6,9 @@ import { toast } from 'react-toastify';
 import { ToastContainer } from "react-toastify";
 
 const Fetch = () => {
+  const [change,setchange]=useState(true)
   const [quote, setQuote] = useState("");
-  const { setInfo } = useContext(dataList);
+  const { setinfo } = useContext(dataList);
 
   const url = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
 
@@ -15,17 +16,17 @@ const Fetch = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
-        setQuote(response.data[0]); // Assuming the API returns an array
+        setQuote(response.data); 
       } catch (error) {
         console.error("Error fetching data:", error);
-        toast.error("Failed to fetch quote");
+       
       }
     };
     fetchData();
-  }, []);
+  }, [change]);
 
   const addList = () => {
-    setInfo(quote);
+    setinfo(quote);
   };
 
   return (
@@ -34,7 +35,7 @@ const Fetch = () => {
       <button
         className='bg-amber-200 text-center cursor-pointer rounded-xl hover:shadow-yellow-200 shadow-sm hover:bg-yellow-300 mt-5 h-10 font-semibold text-lg'
         onClick={() => {
-          // You might want to add some logic here
+       setchange(!change)
         }}
       >
         Read More
